@@ -1,9 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>DevOps Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps CI/CD Demo</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            background: #28a745;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .info {
+            margin-top: 30px;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .badge {
+            margin-top: 20px;
+        }
+
+        .badge span {
+            background: #007bff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin: 5px;
+            display: inline-block;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Hello World 1</h1>
+
+    <div class="container">
+        <h1>🚀 DevOps CI/CD Pipeline</h1>
+        <p>Automated Build • Test • Deploy</p>
+
+        <div class="status">
+            ✅ Deployment Successful
+        </div>
+
+        <div class="info">
+            <p><strong>Version:</strong> v1.0.0</p>
+            <p><strong>Environment:</strong> Production</p>
+            <p><strong>Last Updated:</strong> <span id="date"></span></p>
+        </div>
+
+        <div class="badge">
+            <span>Docker</span>
+            <span>GitHub Actions</span>
+            <span>Kubernetes</span>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 DevOps Demo Project
+    </footer>
+
+    <script>
+        // Show current deployment time
+        const now = new Date();
+        document.getElementById("date").innerText = now.toLocaleString();
+    </script>
+
 </body>
 </html>
