@@ -6,44 +6,45 @@ on:
 
 jobs:
 
-  # :hammer: BUILD JOB
+  # BUILD JOB
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: :inbox_tray: Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: :hammer: Build Docker Image
+      - name: Build Docker Image
         run: |
           echo "Building Docker image..."
           docker build -t devops-demo .
 
-      - name: :package: Save Docker Image
+      - name: Save Docker Image
         run: docker save devops-demo -o devops-demo.tar
 
-      - name: :arrow_up: Upload Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: docker-image
           path: devops-demo.tar
 
 
-  # :test_tube: TEST JOB
+  # TEST JOB
   test:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-      - name: :arrow_down: Download Artifact
+      - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
           name: docker-image
+          path: .   # ✅ ensures file is in current directory
 
-      - name: :package: Load Docker Image
+      - name: Load Docker Image
         run: docker load -i devops-demo.tar
 
-      - name: :test_tube: Test Container
+      - name: Test Container
         run: |
           echo "Testing container..."
 
@@ -61,13 +62,13 @@ jobs:
           docker rm -f test-container
 
 
-  # :rocket: DEPLOY JOB
+  # DEPLOY JOB
   deploy:
     runs-on: ubuntu-latest
     needs: test
 
     steps:
-      - name: :rocket: Deploy to EC2
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -78,16 +79,17 @@ jobs:
             set -x
 
             echo "Connected to EC2"
+
             sudo yum update -y
             sudo yum install -y docker git
             sudo systemctl start docker
             sudo systemctl enable docker
-            cd /home/ec2-user
 
+            cd /home/ec2-user
             rm -rf demo-app
 
             echo "Cloning repo..."
-            GIT_ASKPASS=true git clone https://github.com/rajatdevops1/demo-app.git
+            git clone https://github.com/rajatdevops1/demo-app.git
 
             cd demo-app
 
